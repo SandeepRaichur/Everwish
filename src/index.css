@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-midnight: #10131d;
+    --color-midnight-deep: #090b10;
+    --color-midnight-card: #151926;
+    --color-midnight-surface: #1d2233;
+    --color-midnight-border: #293046;
+
+    --color-gold: #d9bd88;
+    --color-gold-light: #f4e7cd;
+    --color-gold-dark: #b59556;
+    --color-gold-muted: rgba(217, 189, 136, 0.15);
+
+    --color-ivory: #fff5e7;
+    --color-ivory-dim: #d8cfc0;
+    --color-ivory-muted: rgba(255, 245, 231, 0.65);
+
+    --color-rose: #d88f9a;
+    --color-rose-light: #f5cad1;
+    --color-rose-muted: rgba(216, 143, 154, 0.16);
+  }
+
+  body {
+    background-color: var(--color-midnight);
+    color: var(--color-ivory);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-serif {
+    font-family: 'Playfair Display', Georgia, Cambria, 'Times New Roman', serif;
+  }
+}
+
+/* Custom Typography & Editorial Accents */
+.font-display {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+.font-body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Luxury Editorial Styling Utilities */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #FFF5E7 0%, #D9BD88 45%, #F4E7CD 70%, #B59556 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-rose-gradient {
+  background: linear-gradient(135deg, #FFF5E7 0%, #D88F9A 50%, #F5CAD1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.border-gold-subtle {
+  border-color: rgba(217, 189, 136, 0.22);
+}
+
+.border-gold-hover:hover {
+  border-color: rgba(217, 189, 136, 0.55);
+}
+
+.bg-gold-glow {
+  background: radial-gradient(circle, rgba(217, 189, 136, 0.12) 0%, rgba(16, 19, 29, 0) 70%);
+}
+
+.bg-rose-glow {
+  background: radial-gradient(circle, rgba(216, 143, 154, 0.12) 0%, rgba(16, 19, 29, 0) 70%);
+}
+
+/* Luxury Card Primitive */
+.card-luxury {
+  background-color: rgba(21, 25, 38, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(217, 189, 136, 0.18);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card-luxury:hover {
+  border-color: rgba(217, 189, 136, 0.38);
+  transform: translateY(-2px);
+}
+
+/* Accessible focus ring */
+.focus-ring {
+  outline: 2px solid #D9BD88;
+  outline-offset: 3px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Scrollbar for Luxury Dark Theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #090B10;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #232838;
+  border-radius: 4px;
+  border: 2px solid #090B10;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D9BD88;
+}
