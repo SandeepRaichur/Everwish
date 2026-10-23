@@ -82,8 +82,9 @@ export function SuccessStateCard({
   title = "Inquiry Formatted Successfully",
   description = "Your custom birthday project specs have been generated. Click below to initiate your private design chat on WhatsApp.",
   actionButton = null,
-  orderReference = "CELEBRE-REQ-842",
+  orderReference = "EVERWISH-REQ-842",
 }) {
+
   return (
     <div className="p-8 rounded-2xl bg-[#151926] border border-[#D9BD88]/40 text-center max-w-md mx-auto shadow-2xl">
       <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-[#D9BD88]/15 border border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88]">

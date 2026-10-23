@@ -19,11 +19,12 @@ export default function Footer() {
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#1D2233] border border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88] font-serif font-bold text-base">
-                C
+                E
               </div>
               <span className="font-serif text-xl font-bold text-[#FFF5E7] tracking-tight">
-                Celebrē <span className="font-sans text-xs uppercase text-[#D9BD88] tracking-widest">Studios</span>
+                Everwish <span className="font-sans text-xs uppercase text-[#D9BD88] tracking-widest">Studios</span>
               </span>
+
             </div>
             <p className="max-w-md text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
               Crafting bespoke, cinematic birthday websites that preserve personal letters, photos, and music into timeless digital heirlooms for partners, friends, and family.
@@ -97,8 +98,9 @@ export default function Footer() {
         {/* Commercial Integrity & Legal Disclaimers (Strict Compliance with Rule 4 & 5) */}
         <div className="py-8 space-y-3 text-xs text-[#FFF5E7]/50 leading-relaxed border-b border-[#293046]/40">
           <p>
-            <strong className="text-[#FFF5E7]/70">Illustrative Showcase Notice:</strong> All sample recipient mockups, audio visualizer previews, and testimonial layouts presented on this website are illustrative conceptual demonstrations created by Celebrē Studios to demonstrate design capability, interaction pacing, and responsive typography. No real customer photos or private data are published without explicit consent.
+            <strong className="text-[#FFF5E7]/70">Illustrative Showcase Notice:</strong> All sample recipient mockups, audio visualizer previews, and testimonial layouts presented on this website are illustrative conceptual demonstrations created by Everwish Studios to demonstrate design capability, interaction pacing, and responsive typography. No real customer photos or private data are published without explicit consent.
           </p>
+
           <p>
             <strong className="text-[#FFF5E7]/70">Pricing & Delivery Policy:</strong> Listed package rates (₹499 Starter, ₹999 Personalized, ₹1,499 Grand Heirloom) represent introductory side-hustle studio pricing. Standard turnaround is 24–48 hours from receipt of customer media and questionnaire.
           </p>

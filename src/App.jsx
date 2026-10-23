@@ -348,8 +348,9 @@ export default function App() {
                 Art Direction & Architectural Baseline Spec
               </Badge>
               <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#FFF5E7] mt-3">
-                Celebrē Studios Design System Specification
+                Everwish Design System Specification
               </h1>
+
               <p className="text-[#FFF5E7]/70 text-base max-w-3xl mt-2 font-light">
                 Comprehensive reference guide for color contrast ratios, editorial typography scales, motion tokens, and reusable primitives implemented in Chunk 2.
               </p>
@@ -453,8 +454,9 @@ export default function App() {
                 <div>
                   <span className="text-[10px] font-mono uppercase text-[#D9BD88] block">Overline & Code Tokens</span>
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D9BD88]">
-                    CELEBRĒ STUDIOS • BESPOKE EDITIONS
+                    EVERWISH • BESPOKE EDITIONS
                   </p>
+
                 </div>
               </div>
             </section>

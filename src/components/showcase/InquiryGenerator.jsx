@@ -88,8 +88,9 @@ export default function InquiryGenerator({
       `*Notes / Special Story:* ${formData.specialMessage || 'None specified yet'}`,
       `*Rush Delivery Requested:* ${formData.rushDelivery ? 'YES (urgent priority)' : 'Standard (24–48h)'}`,
       `---------------------------------------`,
-      `Sent via Celebrē Studios Website Intake`,
+      `Sent via Everwish Studio Website Intake`,
     ];
+
     return lines.join('\n');
   };
 

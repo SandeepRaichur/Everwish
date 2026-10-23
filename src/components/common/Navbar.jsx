@@ -25,16 +25,17 @@ export default function Navbar({ onOpenOrderModal = null }) {
         <a href="#" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D9BD88] rounded-lg p-1">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1D2233] to-[#090B10] border border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88] shadow-inner group-hover:border-[#D9BD88] transition-colors">
             {/* Monogram Seal */}
-            <span className="font-serif font-bold text-lg tracking-wider text-[#D9BD88]">C</span>
+            <span className="font-serif font-bold text-lg tracking-wider text-[#D9BD88]">E</span>
           </div>
           <div className="flex flex-col text-left">
             <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-[#FFF5E7] group-hover:text-[#D9BD88] transition-colors flex items-center gap-1.5">
-              Celebrē <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-[#D9BD88]">Studios</span>
+              Everwish <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-[#D9BD88]">Studios</span>
             </span>
             <span className="text-[10px] tracking-wider text-[#FFF5E7]/50 -mt-0.5 hidden sm:inline-block">
               Cinematic Birthday Websites
             </span>
           </div>
+
         </a>
 
         {/* Desktop Navigation Links */}

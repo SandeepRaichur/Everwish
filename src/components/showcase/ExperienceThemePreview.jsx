@@ -148,8 +148,9 @@ export default function ExperienceThemePreview({ onSelectThemeForInquiry = null 
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 inline-block" />
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 inline-block" />
               <span className="ml-2 font-mono text-[11px] text-[#FFF5E7]/40 truncate max-w-[200px]">
-                celebre.in/preview-{activeTheme.id}
+                everwish.in/preview-{activeTheme.id}
               </span>
+
             </div>
             <div className="flex items-center gap-2">
               <span className="text-[10px] uppercase font-mono tracking-wider bg-[#10131D] text-[#D9BD88] px-2 py-0.5 rounded border border-[#D9BD88]/30">

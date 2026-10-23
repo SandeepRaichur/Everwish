@@ -1,18 +1,19 @@
 /**
- * CELEBRĒ STUDIOS — DESIGN SYSTEM TOKENS & BUSINESS CONFIG
+ * EVERWISH — DESIGN SYSTEM TOKENS & BUSINESS CONFIG
  * Centralized design tokens and business rules.
  */
 
 export const BRAND = {
-  name: "Celebrē Studios",
+  name: "Everwish",
   tagline: "Handcrafted Cinematic Birthday Websites",
-  descriptor: "Digital Keepsake & Memory Studio",
+  descriptor: "Personalized Digital Birthday Keepsakes",
   phone: "+919876543210", // Formatted for direct WhatsApp integration
-  email: "hello@celebre-studios.in",
+  email: "hello@everwish.in",
   currency: "₹",
   turnaroundDefault: "24–48 hours",
   guaranteeText: "100% human-coded. No generic templates.",
 };
+
 
 export const COLOR_PALETTE = {
   midnightNavy: {
@@ -156,7 +157,7 @@ export const INITIAL_PACKAGES = [
       "Up to 40 photos + 2 custom video messages embedded",
       "Interactive quiz or 'Reasons Why I Love You / You Are Special' cards",
       "Secret message / countdown to midnight surprise",
-      "Custom domain-ready or personalized URL slug (e.g., celebre.in/riya-25)",
+      "Custom domain-ready or personalized URL slug (e.g., everwish.in/riya-25)",
       "Priority 1-on-1 revision consultation on WhatsApp",
       "Lifetime permanent hosting & high-res offline archive download",
     ],
@@ -176,8 +177,9 @@ export const FAQ_ITEMS = [
   },
   {
     question: "How is the website viewed by the birthday person?",
-    answer: "You receive a clean, private web link (e.g. celebre.in/happy-birthday-ananya). You can send it at midnight over WhatsApp, embed it in a QR code printed on a card or gift box, or open it on a tablet or TV during your celebration.",
+    answer: "You receive a clean, private web link (e.g. everwish.in/happy-birthday-ananya). You can send it at midnight over WhatsApp, embed it in a QR code printed on a card or gift box, or open it on a tablet or TV during your celebration.",
   },
+
   {
     question: "Is this built with automated AI or templates?",
     answer: "Every single website is personally composed, curated, and styled by a human designer. We calibrate typography, pacing, and emotional cues specifically for the person you are celebrating.",
