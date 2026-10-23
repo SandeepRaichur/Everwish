@@ -11,11 +11,13 @@ export default function Navbar({ onOpenOrderModal = null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Themes & Vibe', href: '#themes' },
-    { label: 'Pricing & Packages', href: '#pricing' },
+    { label: 'Experiences', href: '#experiences' },
     { label: 'How It Works', href: '#how-it-works' },
+    { label: 'Pricing', href: '#pricing' },
+    { label: 'Why It Matters', href: '#why-it-matters' },
     { label: 'FAQ', href: '#faq' },
   ];
+
 
   return (
     <header className="sticky top-0 z-50 bg-[#10131D]/90 backdrop-blur-md border-b border-[#D9BD88]/15 transition-all">
@@ -69,8 +71,9 @@ export default function Navbar({ onOpenOrderModal = null }) {
               }
             }}
           >
-            Start a Surprise
+            Create a Birthday Surprise
           </Button>
+
         </div>
 
         {/* Mobile Hamburger Toggle */}

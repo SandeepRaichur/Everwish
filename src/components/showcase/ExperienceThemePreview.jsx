@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Heart, Sparkles, Users, Mail, Play, Pause } from 'lucide-react';
+import { Heart, Sparkles, Users, Mail, Play, Pause, ExternalLink } from 'lucide-react';
 import { EXPERIENCE_THEMES } from '../../config/designTokens';
+
 import Badge from '../common/Badge';
 import Button from '../common/Button';
 
@@ -8,7 +9,10 @@ import Button from '../common/Button';
  * Interactive Experience Theme Previewer
  * Showcases the 3 visual directions: Romantic & Intimate, Playful & Colorful, Warm & Family-Oriented
  */
-export default function ExperienceThemePreview({ onSelectThemeForInquiry = null }) {
+export default function ExperienceThemePreview({
+  onSelectThemeForInquiry = null,
+  onOpenLiveModal = null,
+}) {
   const [activeThemeId, setActiveThemeId] = useState('romantic');
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [envelopeOpen, setEnvelopeOpen] = useState(false);
@@ -27,6 +31,7 @@ export default function ExperienceThemePreview({ onSelectThemeForInquiry = null 
         return Heart;
     }
   };
+
 
   return (
     <div className="w-full">
@@ -122,23 +127,38 @@ export default function ExperienceThemePreview({ onSelectThemeForInquiry = null 
             </div>
           </div>
 
-          <div className="pt-6 mt-6 border-t border-[#293046] flex items-center justify-between">
+          <div className="pt-6 mt-6 border-t border-[#293046] flex flex-col sm:flex-row items-center justify-between gap-3">
             <span className="text-xs text-[#FFF5E7]/60">
-              Sample Recipient: <strong className="text-[#FFF5E7]">{activeTheme.sampleRecipient}</strong>
+              Sample: <strong className="text-[#FFF5E7]">{activeTheme.sampleRecipient}</strong>
             </span>
-            {onSelectThemeForInquiry && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => onSelectThemeForInquiry(activeTheme)}
-              >
-                Use this theme →
-              </Button>
-            )}
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              {onOpenLiveModal && (
+                <Button
+                  variant="secondary-outline"
+                  size="sm"
+                  icon={ExternalLink}
+                  onClick={() => onOpenLiveModal(activeTheme)}
+                  className="flex-1 sm:flex-initial"
+                >
+                  Full Demo
+                </Button>
+              )}
+              {onSelectThemeForInquiry && (
+                <Button
+                  variant="primary-gold"
+                  size="sm"
+                  onClick={() => onSelectThemeForInquiry(activeTheme)}
+                  className="flex-1 sm:flex-initial"
+                >
+                  Select Experience
+                </Button>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Right Column: Live Simulated Device Mockup */}
+
         <div className="lg:col-span-7 rounded-3xl bg-[#090B10] border-2 border-[#D9BD88]/30 shadow-2xl overflow-hidden flex flex-col">
           
           {/* Simulated Browser Bar */}
@@ -153,11 +173,18 @@ export default function ExperienceThemePreview({ onSelectThemeForInquiry = null 
 
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-[10px] uppercase font-mono tracking-wider bg-[#10131D] text-[#D9BD88] px-2 py-0.5 rounded border border-[#D9BD88]/30">
-                Live Interactive Canvas
-              </span>
+              <button
+                type="button"
+                onClick={() => onOpenLiveModal && onOpenLiveModal(activeTheme)}
+                className="text-[10px] uppercase font-mono tracking-wider bg-[#10131D] hover:bg-[#1D2233] text-[#D9BD88] px-2.5 py-1 rounded-full border border-[#D9BD88]/40 transition-colors flex items-center gap-1 cursor-pointer"
+                title="Open full interactive demo"
+              >
+                <span>Full Experience</span>
+                <ExternalLink className="w-2.5 h-2.5" />
+              </button>
             </div>
           </div>
+
 
           {/* Dynamic Theme Canvas Content */}
           <div

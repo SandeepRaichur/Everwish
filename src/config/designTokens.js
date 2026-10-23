@@ -169,23 +169,35 @@ export const INITIAL_PACKAGES = [
 export const FAQ_ITEMS = [
   {
     question: "How does the ordering and creation process work?",
-    answer: "You pick a package and share your photos, message, and favorite song via our simple WhatsApp intake or Google Drive form. I handcraft the website within 24–48 hours, send you a private preview link for revisions, and once you approve, deliver the final live link to surprise your special person.",
+    answer: "You pick a package and share your photos, message, and favorite song via our simple WhatsApp intake or Google Drive link. I handcraft the website within 24–48 hours, send you a private preview link for revisions, and once you approve, deliver the final live link to surprise your special person at midnight.",
+  },
+  {
+    question: "Are there any hidden hosting fees or recurring subscriptions?",
+    answer: "No. All prices (₹499 Starter, ₹999 Personalized, ₹1,499 Grand Heirloom) are transparent, one-time fees. There are zero subscriptions, zero hosting maintenance charges, and no surprise add-ons.",
+  },
+  {
+    question: "What is your revision policy if I want changes?",
+    answer: "Every order includes revisions before final delivery. Starter includes 1 round of adjustments; Personalized includes 2 rounds of pacing/photo tweaks; and Grand Heirloom includes priority 1-on-1 revision consultation on WhatsApp until you are completely thrilled with the result.",
   },
   {
     question: "Can I choose my own background music and photos?",
-    answer: "Yes, absolutely! You can specify any song (Spotify, YouTube, or MP3 file) and send your favorite photos. We arrange and color-tune them to ensure they look stunning on all devices.",
+    answer: "Yes, absolutely! You can specify any song (Spotify link, YouTube link, or MP3 file) and send your favorite photos. We color-tune, compress for fast loading, and arrange them chronologically to build an emotional journey.",
   },
   {
-    question: "How is the website viewed by the birthday person?",
-    answer: "You receive a clean, private web link (e.g. everwish.in/happy-birthday-ananya). You can send it at midnight over WhatsApp, embed it in a QR code printed on a card or gift box, or open it on a tablet or TV during your celebration.",
-  },
-
-  {
-    question: "Is this built with automated AI or templates?",
-    answer: "Every single website is personally composed, curated, and styled by a human designer. We calibrate typography, pacing, and emotional cues specifically for the person you are celebrating.",
+    question: "Will the website work smoothly on iPhone and Android?",
+    answer: "Yes. Every website is built mobile-first and tested thoroughly on modern iOS, Android, tablet, and desktop browsers. Touch interactions (such as tapping to unseal wax envelopes or flipping polaroids) work fluidly on all touchscreen devices.",
   },
   {
-    question: "What if I need urgent delivery in under 12 hours?",
-    answer: "We offer express rush delivery for urgent midnight surprises when our studio schedule permits. Message us on WhatsApp before ordering to check current rush availability.",
+    question: "How long will the birthday website link stay live?",
+    answer: "Starter websites remain active for 6 months, Personalized Story websites stay active for 1 year, and Grand Heirloom websites enjoy permanent lifetime hosting. You also receive an offline archive so your memories are preserved forever.",
+  },
+  {
+    question: "How are my private photos, letters, and memories protected?",
+    answer: "Your privacy is our highest priority. Websites are published with 'noindex' headers on unlisted, obfuscated URLs so search engines cannot index them. We never display third-party advertisements, never share your data, and can archive or delete media upon request after your celebration.",
+  },
+  {
+    question: "Can you deliver an express rush surprise in under 12 hours?",
+    answer: "Yes! When studio capacity permits, we accept express rush commissions for tonight's midnight surprise. Message us directly on WhatsApp before submitting your brief to confirm current rush slot availability.",
   },
 ];
+

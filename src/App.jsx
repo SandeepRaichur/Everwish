@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
-import {
-  Sparkles,
-  Heart,
-  MessageCircle,
-  Clock,
-  Eye,
-} from 'lucide-react';
+import { Sparkles, Heart, Eye, Clock } from 'lucide-react';
+
+
 
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
@@ -15,16 +11,22 @@ import SectionHeading from './components/common/SectionHeading';
 import { Input, Select, Textarea } from './components/common/FormControls';
 import { LoadingSkeleton, AlertBanner } from './components/common/StatusStates';
 import { AccordionGroup } from './components/common/Accordion';
+
 import PricingCard from './components/showcase/PricingCard';
 import ExperienceThemePreview from './components/showcase/ExperienceThemePreview';
-import FeedbackCard from './components/showcase/FeedbackCard';
+import EmotionalValueShowcase from './components/showcase/EmotionalValueShowcase';
+import TrustAndPrivacySection from './components/showcase/TrustAndPrivacySection';
+import FinalCTASection from './components/showcase/FinalCTASection';
 import InquiryGenerator from './components/showcase/InquiryGenerator';
+import LiveExperienceModal from './components/showcase/LiveExperienceModal';
+
 import { BRAND, INITIAL_PACKAGES, FAQ_ITEMS, EXPERIENCE_THEMES } from './config/designTokens';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('experience'); // 'experience' | 'design-system'
   const [selectedPackage, setSelectedPackage] = useState(INITIAL_PACKAGES[1]);
   const [selectedTheme, setSelectedTheme] = useState(EXPERIENCE_THEMES[0]);
+  const [previewModalTheme, setPreviewModalTheme] = useState(null);
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -38,20 +40,25 @@ export default function App() {
     scrollToSection('order-inquiry');
   };
 
+  const handleSelectTheme = (theme) => {
+    setSelectedTheme(theme);
+    scrollToSection('order-inquiry');
+  };
+
   return (
     <div className="min-h-screen bg-[#10131D] text-[#FFF5E7] flex flex-col font-sans selection:bg-[#D9BD88] selection:text-[#10131D]">
       
       {/* Studio Viewport Mode Switcher Banner (Allows inspecting design system tokens or full experience) */}
-      <div className="bg-[#090B10] border-b border-[#293046] py-2 px-4">
+      <div className="bg-[#090B10] border-b border-[#293046] py-2 px-4 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-[#FFF5E7]/70">
             <span className="w-2 h-2 rounded-full bg-[#D9BD88] animate-pulse" />
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#D9BD88]">
-              Design System & Architectural Baseline
+              Everwish Studios — Chunk 3 Live Build
             </span>
             <span className="hidden md:inline text-[#FFF5E7]/40">|</span>
             <span className="hidden md:inline text-[11px] text-[#FFF5E7]/60">
-              Chunk 2 Verified: WCAG AAA Compliant Palette & Components
+              Personalized Birthday Websites from ₹499
             </span>
           </div>
 
@@ -76,7 +83,7 @@ export default function App() {
                   : 'text-[#FFF5E7]/70 hover:text-[#FFF5E7]'
               }`}
             >
-              Design Tokens & Primitives Spec
+              Design Tokens Spec
             </button>
           </div>
         </div>
@@ -89,38 +96,39 @@ export default function App() {
       <main className="flex-1">
         {activeTab === 'experience' ? (
           <div>
-            {/* HERO SECTION — Cinematic Title Sequence & Emotional Pacing */}
-            <section className="relative pt-20 pb-24 md:pt-28 md:pb-36 overflow-hidden">
+            
+            {/* 1. HERO SECTION — Cinematic Title Sequence & Immediate Conversion Hook */}
+            <section className="relative pt-16 pb-20 md:pt-24 md:pb-32 overflow-hidden">
               
               {/* Subtle ambient luxury light orbs */}
               <div
-                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-radial from-[#D9BD88]/10 via-[#D88F9A]/5 to-transparent rounded-full pointer-events-none blur-3xl -z-10"
+                className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-tr from-[#D9BD88]/10 via-[#D88F9A]/10 to-transparent rounded-full pointer-events-none blur-3xl -z-10"
                 aria-hidden="true"
               />
 
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 
                 {/* Overline Badge */}
-                <div className="inline-flex items-center gap-2 mb-6 animate-in fade-in duration-500">
+                <div className="inline-flex items-center gap-2 mb-6">
                   <Badge variant="gold" size="md" dot>
-                    Handcrafted Digital Keepsakes • From ₹499
+                    Handcrafted Personal Birthday Websites • From ₹499
                   </Badge>
                 </div>
 
-                {/* Editorial Headline */}
+                {/* Editorial Headline (from Chunk 3 spec) */}
                 <h1 className="text-4xl sm:text-6xl lg:text-7xl font-serif font-bold text-[#FFF5E7] tracking-tight leading-[1.1] max-w-4xl mx-auto">
-                  A personal birthday website they will{' '}
+                  More than a birthday wish.{' '}
                   <span className="italic font-normal text-gold-gradient block sm:inline">
-                    remember for a lifetime.
+                    A moment they'll never forget.
                   </span>
                 </h1>
 
-                {/* Supporting Pacing Text */}
+                {/* Supporting Copy (from Chunk 3 spec) */}
                 <p className="mt-6 text-base sm:text-lg lg:text-xl text-[#FFF5E7]/75 max-w-2xl mx-auto font-light leading-relaxed">
-                  Turn your shared photographs, favorite songs, and heartfelt words into a bespoke, cinematic web experience. Delivered private and ad-free in 24–48 hours.
+                  Beautiful, personalized birthday websites made from your photos, memories and words — created just for someone special. Handcrafted and delivered private in 24–48 hours.
                 </p>
 
-                {/* Primary CTA Buttons */}
+                {/* Primary & Secondary CTA Buttons */}
                 <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                   <Button
                     variant="primary-gold"
@@ -129,16 +137,16 @@ export default function App() {
                     onClick={() => scrollToSection('order-inquiry')}
                     className="w-full sm:w-auto"
                   >
-                    Create a Surprise
+                    Create Their Surprise
                   </Button>
                   <Button
                     variant="secondary-outline"
                     size="lg"
                     icon={Eye}
-                    onClick={() => scrollToSection('themes')}
+                    onClick={() => scrollToSection('experiences')}
                     className="w-full sm:w-auto"
                   >
-                    Preview The 3 Themes
+                    Explore Birthday Experiences
                   </Button>
                 </div>
 
@@ -150,169 +158,153 @@ export default function App() {
                   </div>
                   <div className="flex flex-col items-center gap-1">
                     <span className="font-serif text-lg font-bold text-[#D9BD88]">24–48h</span>
-                    <span>Fast Turnaround</span>
+                    <span>Standard Turnaround</span>
                   </div>
                   <div className="flex flex-col items-center gap-1">
                     <span className="font-serif text-lg font-bold text-[#D9BD88]">Private</span>
                     <span>Ad-Free Keepsake URL</span>
                   </div>
                   <div className="flex flex-col items-center gap-1">
-                    <span className="font-serif text-lg font-bold text-[#D9BD88]">Introductory</span>
-                    <span>From ₹499 to ₹1,499</span>
+                    <span className="font-serif text-lg font-bold text-[#D9BD88]">₹499 – ₹1,499</span>
+                    <span>Introductory Prices</span>
                   </div>
                 </div>
 
               </div>
             </section>
 
-            {/* SECTION 2: THE 3 THEMES SHOWCASE (Romantic, Playful, Family) */}
-            <section id="themes" className="py-20 bg-[#0B0D14] border-y border-[#D9BD88]/15">
+            {/* 2. EXPERIENCE SHOWCASE — 3 Curated Themes (Romantic, Best Friend, Family) */}
+            <section id="experiences" className="py-20 bg-[#0B0D14] border-y border-[#D9BD88]/15 scroll-mt-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionHeading
                   overline="Artistic Directions"
                   title="Tailored specifically for"
                   italicWord="your relationship."
-                  subtitle="Every person is unique. We never use one-size-fits-all designs. Choose the emotional frequency that matches your recipient."
+                  subtitle="Every person is unique. We never use one-size-fits-all designs. Explore our three distinct directions with interactive simulated demos."
                   badgeText="3 Visual Styles"
                 />
 
                 <ExperienceThemePreview
-                  onSelectThemeForInquiry={(theme) => {
-                    setSelectedTheme(theme);
-                    scrollToSection('order-inquiry');
-                  }}
+                  onSelectThemeForInquiry={handleSelectTheme}
+                  onOpenLiveModal={(theme) => setPreviewModalTheme(theme)}
                 />
               </div>
             </section>
 
-            {/* SECTION 3: PRICING & INTRODUCTORY PACKAGES */}
-            <section id="pricing" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* 3. HOW IT WORKS — 4 Simple Steps */}
+            <section id="how-it-works" className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
               <SectionHeading
-                overline="Transparent Introductory Rates"
-                title="Handcrafted keepsake packages for"
-                italicWord="every celebration."
-                subtitle="Transparent pricing with zero hidden hosting fees or recurring subscriptions. Review introductory packages below."
-                badgeText="Introductory Slots"
+                overline="The 4-Step Journey"
+                title="From shared memories to a"
+                italicWord="live midnight premiere."
+                subtitle="A frictionless, personal process where you share your favorite photos and we personally compose your digital heirloom."
               />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
-                {INITIAL_PACKAGES.map((pkg) => (
-                  <PricingCard
-                    key={pkg.id}
-                    packageData={pkg}
-                    isSelected={selectedPackage.id === pkg.id}
-                    onSelect={handleSelectPackage}
-                  />
-                ))}
-              </div>
-
-              {/* Rush Delivery / Custom Requests Callout */}
-              <div className="mt-12 p-6 rounded-2xl bg-[#151926]/60 border border-[#293046] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#FFF5E7]/80">
-                <div className="flex items-center gap-3">
-                  <Clock className="w-5 h-5 text-[#D9BD88] shrink-0" />
-                  <span>
-                    Need it tonight for a midnight surprise? <strong>Express &lt;12 hour rush delivery</strong> is available upon WhatsApp confirmation.
-                  </span>
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                
+                {/* Step 1 */}
+                <div className="p-7 rounded-3xl bg-[#151926]/70 border border-[#293046] space-y-4">
+                  <span className="font-serif text-3xl font-bold text-[#D9BD88]">01</span>
+                  <h3 className="font-serif text-lg font-bold text-[#FFF5E7]">
+                    Choose An Experience
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
+                    Pick your package (₹499, ₹999, or ₹1,499) and select the emotional vibe that matches your recipient.
+                  </p>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  href={`https://wa.me/${BRAND.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                    "Hi! I need an express rush birthday website delivered within 12 hours. Is a slot available today?"
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  icon={MessageCircle}
-                >
-                  Check Rush Slot
-                </Button>
+
+                {/* Step 2 */}
+                <div className="p-7 rounded-3xl bg-[#151926]/70 border border-[#293046] space-y-4">
+                  <span className="font-serif text-3xl font-bold text-[#D9BD88]">02</span>
+                  <h3 className="font-serif text-lg font-bold text-[#FFF5E7]">
+                    Share Photos & Message
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
+                    Send your favorite photos, song link, and personal message directly over WhatsApp or a private Google Drive folder.
+                  </p>
+                </div>
+
+                {/* Step 3 */}
+                <div className="p-7 rounded-3xl bg-[#151926]/70 border border-[#D9BD88]/30 space-y-4 shadow-lg shadow-[#D9BD88]/5">
+                  <span className="font-serif text-3xl font-bold text-[#D9BD88]">03</span>
+                  <h3 className="font-serif text-lg font-bold text-[#FFF5E7]">
+                    Approve The Creation
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
+                    Within 24–48 hours, receive a private staging link to preview on your phone. Request tweaks until you are thrilled.
+                  </p>
+                </div>
+
+                {/* Step 4 */}
+                <div className="p-7 rounded-3xl bg-[#151926]/70 border border-[#293046] space-y-4">
+                  <span className="font-serif text-3xl font-bold text-[#D9BD88]">04</span>
+                  <h3 className="font-serif text-lg font-bold text-[#FFF5E7]">
+                    Receive & Share Link
+                  </h3>
+                  <p className="text-xs sm:text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
+                    Get your clean, ad-free link to send at 12:00 AM on WhatsApp, or embed into a printed QR code gift card.
+                  </p>
+                </div>
+
               </div>
             </section>
 
-            {/* SECTION 4: HOW IT WORKS / THE PROCESS */}
-            <section id="how-it-works" className="py-20 bg-[#0B0D14] border-y border-[#D9BD88]/15">
+            {/* 4. PRICING & INTRODUCTORY PACKAGES */}
+            <section id="pricing" className="py-24 bg-[#0B0D14] border-y border-[#D9BD88]/15 scroll-mt-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionHeading
-                  overline="The Collaborative Craft"
-                  title="From private memories to a"
-                  italicWord="live midnight premiere."
-                  subtitle="A frictionless, personal process where you simply share your favorite photos and let us handle all design and coding."
+                  overline="Introductory Rates"
+                  title="Handcrafted keepsake packages for"
+                  italicWord="every celebration."
+                  subtitle="Transparent pricing with zero hidden hosting fees or recurring subscriptions. Review introductory packages below."
+                  badgeText="Introductory Slots"
                 />
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                  <div className="p-8 rounded-3xl bg-[#151926]/70 border border-[#293046] space-y-4">
-                    <span className="font-serif text-3xl font-bold text-[#D9BD88]">01</span>
-                    <h3 className="font-serif text-xl font-bold text-[#FFF5E7]">
-                      Share Your Story & Media
-                    </h3>
-                    <p className="text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
-                      Choose your package and send your favorite photos, message, and song link over WhatsApp or a private Google Drive link.
-                    </p>
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                  {INITIAL_PACKAGES.map((pkg) => (
+                    <PricingCard
+                      key={pkg.id}
+                      packageData={pkg}
+                      isSelected={selectedPackage.id === pkg.id}
+                      onSelect={handleSelectPackage}
+                    />
+                  ))}
+                </div>
 
-                  <div className="p-8 rounded-3xl bg-[#151926]/70 border border-[#D9BD88]/30 space-y-4 shadow-lg shadow-[#D9BD88]/5">
-                    <span className="font-serif text-3xl font-bold text-[#D9BD88]">02</span>
-                    <h3 className="font-serif text-xl font-bold text-[#FFF5E7]">
-                      Handcrafted & Calibrated
-                    </h3>
-                    <p className="text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
-                      We curate photos, calibrate typography, set background music, and send you a private preview link for revisions and feedback.
-                    </p>
+                {/* Rush Delivery / Custom Requests Callout */}
+                <div className="mt-12 p-6 rounded-2xl bg-[#151926]/60 border border-[#293046] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#FFF5E7]/80">
+                  <div className="flex items-center gap-3">
+                    <Clock className="w-5 h-5 text-[#D9BD88] shrink-0" />
+                    <span>
+                      Need it tonight for a midnight surprise? <strong>Express &lt;12 hour rush delivery</strong> is available upon WhatsApp confirmation.
+                    </span>
                   </div>
-
-                  <div className="p-8 rounded-3xl bg-[#151926]/70 border border-[#293046] space-y-4">
-                    <span className="font-serif text-3xl font-bold text-[#D9BD88]">03</span>
-                    <h3 className="font-serif text-xl font-bold text-[#FFF5E7]">
-                      The Midnight Reveal
-                    </h3>
-                    <p className="text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
-                      Receive your final high-speed link to send at 12:00 AM on WhatsApp, or embed into a printed QR code gift card.
-                    </p>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    href={`https://wa.me/${BRAND.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
+                      "Hi Everwish! I need an express rush birthday website delivered within 12 hours. Is a slot available today?"
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Check Rush Availability →
+                  </Button>
                 </div>
               </div>
             </section>
 
-            {/* SECTION 5: ILLUSTRATIVE EXPERIENCE FORMATS / REVIEWS (Rule 4 & 5 Compliant) */}
-            <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <SectionHeading
-                overline="Client Keepsake Formats"
-                title="Crafted to evoke authentic"
-                italicWord="happy tears."
-                subtitle="Explore how custom birthday websites transform ordinary celebrations into unforgettable milestones."
-                badgeText="Sample Concepts"
+            {/* 5. EMOTIONAL VALUE SECTION — Letters, Soundtrack, Memories & Countdown */}
+            <div id="why-it-matters" className="scroll-mt-20">
+              <EmotionalValueShowcase
+                onStartSurprise={() => scrollToSection('order-inquiry')}
               />
+            </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <FeedbackCard
-                  occasion="25th Birthday Midnight Surprise"
-                  recipientRelationship="Romantic Partner"
-                  quote="Opening this at midnight with our special song playing in the background brought happy tears. It was genuinely a hundred times more meaningful than any physical gift."
-                  sentiment="Tears of joy & lifelong bookmark"
-                  themeUsed="Romantic & Intimate"
-                />
-                <FeedbackCard
-                  occasion="College Reunion & Best Friend Birthday"
-                  recipientRelationship="Best Friend"
-                  quote="The interactive scratch cards and throwback timeline of our trips had our entire friend group howling with laughter. Everyone asked where I had this made."
-                  sentiment="Laugh-out-loud hit with the group"
-                  themeUsed="Playful & Vibrant"
-                />
-                <FeedbackCard
-                  occasion="Father's 60th Golden Jubilee"
-                  recipientRelationship="Parent & Family"
-                  quote="My dad sat quietly reading each family note from his grandchildren with tears in his eyes. He still opens the website every Sunday morning."
-                  sentiment="Permanent family treasure"
-                  themeUsed="Warm & Family-Oriented"
-                />
-              </div>
+            {/* 6. TRUST & PRIVACY SECTION — Strict Compliance with Rule 4 & 5 */}
+            <TrustAndPrivacySection />
 
-              <p className="text-center text-xs text-[#FFF5E7]/40 mt-8">
-                ✦ Demonstrations illustrate typical narrative layout and reception structure. Respecting client confidentiality, no private customer albums are displayed publicly.
-              </p>
-            </section>
-
-            {/* SECTION 6: INTERACTIVE INTAKE & QUOTE BUILDER */}
+            {/* 7. DIRECT INTAKE & BRIEF GENERATOR (Working Form & Instant WhatsApp Connect) */}
             <section className="py-20 bg-[#0B0D14] border-t border-[#D9BD88]/15 px-4 sm:px-6 lg:px-8">
               <SectionHeading
                 overline="Direct Commission Brief"
@@ -327,17 +319,23 @@ export default function App() {
               />
             </section>
 
-            {/* SECTION 7: FAQ ACCORDION */}
-            <section id="faq" className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            {/* 8. FAQ ACCORDION (Covering all 8 critical points) */}
+            <section id="faq" className="py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-20">
               <SectionHeading
                 overline="Frequently Asked Questions"
                 title="Everything you need to"
                 italicWord="know before ordering."
-                subtitle="Clear, honest answers about delivery timelines, song embeddings, privacy, and revisions."
+                subtitle="Clear, honest answers about delivery timelines, song embeddings, privacy, revisions, and mobile compatibility."
               />
 
               <AccordionGroup items={FAQ_ITEMS} />
             </section>
+
+            {/* 9. FINAL CALL TO ACTION */}
+            <FinalCTASection
+              onStartSurprise={() => scrollToSection('order-inquiry')}
+            />
+
           </div>
         ) : (
           /* DESIGN TOKENS & PRIMITIVES SPECIFICATION TAB */
@@ -350,9 +348,8 @@ export default function App() {
               <h1 className="text-3xl sm:text-5xl font-serif font-bold text-[#FFF5E7] mt-3">
                 Everwish Design System Specification
               </h1>
-
               <p className="text-[#FFF5E7]/70 text-base max-w-3xl mt-2 font-light">
-                Comprehensive reference guide for color contrast ratios, editorial typography scales, motion tokens, and reusable primitives implemented in Chunk 2.
+                Comprehensive reference guide for color contrast ratios, editorial typography scales, motion tokens, and reusable primitives implemented in Everwish.
               </p>
             </div>
 
@@ -456,7 +453,6 @@ export default function App() {
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#D9BD88]">
                     EVERWISH • BESPOKE EDITIONS
                   </p>
-
                 </div>
               </div>
             </section>
@@ -473,9 +469,6 @@ export default function App() {
                 </Button>
                 <Button variant="secondary-outline" icon={Eye}>
                   Secondary Outline
-                </Button>
-                <Button variant="whatsapp" icon={MessageCircle}>
-                  WhatsApp Direct
                 </Button>
                 <Button variant="rose" icon={Heart}>
                   Muted Rose
@@ -576,13 +569,20 @@ export default function App() {
               </div>
             </section>
 
-
           </div>
         )}
       </main>
 
-      {/* Global Footer */}
+      {/* 10. Global Footer */}
       <Footer />
+
+      {/* Interactive Full-Screen Preview Modal */}
+      <LiveExperienceModal
+        theme={previewModalTheme}
+        isOpen={Boolean(previewModalTheme)}
+        onClose={() => setPreviewModalTheme(null)}
+        onSelectTheme={handleSelectTheme}
+      />
       
     </div>
   );
