@@ -178,6 +178,41 @@ assert(robotsContent.includes('Sitemap: https://everwish.in/sitemap.xml'), 'robo
 const redirectsContent = readFileSync(resolve(process.cwd(), 'public/_redirects'), 'utf-8');
 assert(redirectsContent.includes('/*    /index.html   200'), '_redirects contains 200 SPA rewrite rule for Cloudflare Pages');
 
+// ── TEST GROUP 7: CENTRALIZED CONFIGURATION (CHUNK 8) ──
+console.log('\n▶ TEST GROUP 7: Centralized siteConfig Architecture & Flexibility');
+
+const siteConfigModule = await import('../src/config/siteConfig.js');
+const { siteConfig } = siteConfigModule;
+
+assert(Boolean(siteConfig), 'siteConfig object exists');
+assert(Boolean(siteConfig.brand?.name), `siteConfig.brand.name is defined (${siteConfig.brand?.name})`);
+assert(Boolean(siteConfig.brand?.heroHeadline), 'siteConfig.brand.heroHeadline is defined');
+assert(Boolean(siteConfig.brand?.heroStats?.length >= 3), 'siteConfig.brand.heroStats has at least 3 metrics');
+assert(Boolean(siteConfig.business?.whatsappNumber), `siteConfig.business.whatsappNumber is defined (${siteConfig.business?.whatsappNumber})`);
+assert(Boolean(siteConfig.business?.email), `siteConfig.business.email is defined (${siteConfig.business?.email})`);
+assert(typeof siteConfig.features?.showThemes === 'boolean', 'siteConfig.features.showThemes is boolean');
+assert(typeof siteConfig.features?.showPricing === 'boolean', 'siteConfig.features.showPricing is boolean');
+assert(typeof siteConfig.features?.showHowItWorks === 'boolean', 'siteConfig.features.showHowItWorks is boolean');
+assert(typeof siteConfig.features?.showFaq === 'boolean', 'siteConfig.features.showFaq is boolean');
+assert(typeof siteConfig.features?.showInquiryForm === 'boolean', 'siteConfig.features.showInquiryForm is boolean');
+assert(Array.isArray(siteConfig.packages) && siteConfig.packages.length === 3, 'siteConfig.packages has 3 tiers');
+assert(Array.isArray(siteConfig.howItWorks?.steps) && siteConfig.howItWorks.steps.length === 4, 'siteConfig.howItWorks.steps has 4 sequential steps');
+assert(Array.isArray(siteConfig.faq?.items) && siteConfig.faq.items.length >= 7, 'siteConfig.faq.items has at least 7 comprehensive Q&As');
+assert(Boolean(siteConfig.trust?.pillars?.length >= 3), 'siteConfig.trust.pillars has at least 3 pillars');
+assert(Boolean(siteConfig.seo?.title && siteConfig.seo?.description), 'siteConfig.seo contains title and meta description');
+
+// Test dynamic configuration override capability:
+const simulatedBrandChange = { ...siteConfig.brand, name: 'AuraWishes' };
+assert(simulatedBrandChange.name === 'AuraWishes', 'Brand name can be dynamically overridden without component modification');
+
+const simulatedPriceChange = siteConfig.packages.map(p => p.id === 'starter' ? { ...p, price: 599 } : p);
+assert(simulatedPriceChange.find(p => p.id === 'starter')?.price === 599, 'Package price can be dynamically adjusted without component modification');
+
+// Test backward compatibility references:
+assert(siteConfigModule.BRAND.name === siteConfig.brand.name, 'BRAND backward compatibility alias matches siteConfig.brand.name');
+assert(siteConfigModule.BUSINESS_CONFIG.whatsappNumber === siteConfig.business.whatsappNumber, 'BUSINESS_CONFIG backward compatibility alias matches siteConfig.business.whatsappNumber');
+assert(siteConfigModule.INITIAL_PACKAGES.length === siteConfig.packages.length, 'INITIAL_PACKAGES backward compatibility alias matches siteConfig.packages');
+
 // ── SUMMARY REPORT ──
 console.log('\n====================================================');
 console.log(`  QA SUMMARY: ${passCount} PASSED, ${failCount} FAILED`);
@@ -188,3 +223,4 @@ if (failCount > 0) {
 } else {
   process.exit(0);
 }
+

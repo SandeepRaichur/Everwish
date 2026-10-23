@@ -1,11 +1,11 @@
 import React from 'react';
-import { BRAND } from '../../config/designTokens';
+import { siteConfig } from '../../config/siteConfig.js';
 import { Heart, MessageCircle, Mail, ShieldCheck, Clock } from 'lucide-react';
 
 const CURRENT_YEAR = new Date().getFullYear();
 
 /**
- * Editorial Studio Footer
+ * Editorial Studio Footer (Driven by centralized siteConfig.js)
  */
 export default function Footer({ onOpenLegalModal = null }) {
   return (
@@ -19,22 +19,22 @@ export default function Footer({ onOpenLegalModal = null }) {
           <div className="md:col-span-2 space-y-4">
             <div className="flex items-center gap-3">
               <div className="w-9 h-9 rounded-xl bg-[#1D2233] border border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88] font-serif font-bold text-base">
-                E
+                {siteConfig.brand.monogramLetter || 'E'}
               </div>
               <span className="font-serif text-xl font-bold text-[#FFF5E7] tracking-tight">
-                Everwish <span className="font-sans text-xs uppercase text-[#D9BD88] tracking-widest">Studios</span>
+                {siteConfig.brand.name} <span className="font-sans text-xs uppercase text-[#D9BD88] tracking-widest">Studios</span>
               </span>
 
             </div>
             <p className="max-w-md text-sm text-[#FFF5E7]/70 leading-relaxed font-light">
-              Crafting bespoke, cinematic birthday websites that preserve personal letters, photos, and music into timeless digital heirlooms for partners, friends, and family.
+              {siteConfig.brand.description}
             </p>
             <div className="flex flex-wrap items-center gap-4 text-xs text-[#D9BD88]">
               <span className="flex items-center gap-1.5">
-                <Clock className="w-3.5 h-3.5" /> Handcrafted in 24–48 hours
+                <Clock className="w-3.5 h-3.5" /> Handcrafted in {siteConfig.business.standardTurnaround}
               </span>
               <span className="flex items-center gap-1.5">
-                <ShieldCheck className="w-3.5 h-3.5" /> 100% Private & Ad-Free Link
+                <ShieldCheck className="w-3.5 h-3.5" /> 100% Private &amp; Ad-Free Link
               </span>
             </div>
           </div>
@@ -45,26 +45,13 @@ export default function Footer({ onOpenLegalModal = null }) {
               Experiences
             </h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <a href="#themes" className="hover:text-[#FFF5E7] transition-colors">
-                  Romantic & Intimate
-                </a>
-              </li>
-              <li>
-                <a href="#themes" className="hover:text-[#FFF5E7] transition-colors">
-                  Playful & Friendship Reels
-                </a>
-              </li>
-              <li>
-                <a href="#themes" className="hover:text-[#FFF5E7] transition-colors">
-                  Warm Family Retrospectives
-                </a>
-              </li>
-              <li>
-                <a href="#pricing" className="hover:text-[#FFF5E7] transition-colors">
-                  Introductory Packages
-                </a>
-              </li>
+              {siteConfig.navigation.links.map((link) => (
+                <li key={link.label}>
+                  <a href={link.href} className="hover:text-[#FFF5E7] transition-colors">
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -78,18 +65,20 @@ export default function Footer({ onOpenLegalModal = null }) {
             </p>
             <div className="space-y-2 pt-1">
               <a
-                href={`https://wa.me/${BRAND.phone.replace(/[^0-9]/g, '')}`}
+                href={`https://wa.me/${siteConfig.business.whatsappNumber}?text=${encodeURIComponent(
+                  siteConfig.business.defaultInquiryMessage
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-[#25D366] hover:underline"
               >
-                <MessageCircle className="w-4 h-4" /> WhatsApp: {BRAND.phone}
+                <MessageCircle className="w-4 h-4" /> WhatsApp: +{siteConfig.business.whatsappNumber}
               </a>
               <a
-                href={`mailto:${BRAND.email}`}
+                href={`mailto:${siteConfig.business.email}`}
                 className="flex items-center gap-2 text-sm text-[#FFF5E7]/80 hover:text-[#D9BD88] transition-colors"
               >
-                <Mail className="w-4 h-4" /> {BRAND.email}
+                <Mail className="w-4 h-4" /> {siteConfig.business.email}
               </a>
             </div>
           </div>
@@ -98,18 +87,18 @@ export default function Footer({ onOpenLegalModal = null }) {
         {/* Commercial Integrity & Legal Disclaimers (Strict Compliance with Rule 4 & 5) */}
         <div className="py-8 space-y-3 text-xs text-[#FFF5E7]/50 leading-relaxed border-b border-[#293046]/40">
           <p>
-            <strong className="text-[#FFF5E7]/70">Illustrative Showcase Notice:</strong> All sample recipient mockups, audio visualizer previews, and testimonial layouts presented on this website are illustrative conceptual demonstrations created by Everwish Studios to demonstrate design capability, interaction pacing, and responsive typography. No real customer photos or private data are published without explicit consent.
+            <strong className="text-[#FFF5E7]/70">Illustrative Showcase Notice:</strong> All sample recipient mockups, audio visualizer previews, and testimonial layouts presented on this website are illustrative conceptual demonstrations created by {siteConfig.brand.name} Studios to demonstrate design capability, interaction pacing, and responsive typography. No real customer photos or private data are published without explicit consent.
           </p>
 
           <p>
-            <strong className="text-[#FFF5E7]/70">Pricing & Delivery Policy:</strong> Listed package rates (₹499 Starter, ₹999 Personalized, ₹1,499 Grand Heirloom) represent introductory side-hustle studio pricing. Standard turnaround is 24–48 hours from receipt of customer media and questionnaire.
+            <strong className="text-[#FFF5E7]/70">Pricing &amp; Delivery Policy:</strong> Listed package rates represent introductory side-hustle studio pricing. Standard turnaround is {siteConfig.business.standardTurnaround} from receipt of customer media and questionnaire.
           </p>
         </div>
 
         {/* Bottom Bar with Trust & Legal Modals */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#FFF5E7]/50">
           <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs text-[#FFF5E7]/60">
-            <span>© {CURRENT_YEAR} {BRAND.name}.</span>
+            <span>© {CURRENT_YEAR} {siteConfig.brand.name}. {siteConfig.brand.copyrightNotice}</span>
             <button
               type="button"
               onClick={() => onOpenLegalModal && onOpenLegalModal('privacy')}
@@ -123,7 +112,7 @@ export default function Footer({ onOpenLegalModal = null }) {
               onClick={() => onOpenLegalModal && onOpenLegalModal('retention')}
               className="hover:text-[#D9BD88] transition-colors cursor-pointer"
             >
-              File Retention & Deletion
+              File Retention &amp; Deletion
             </button>
             <span>•</span>
             <button
@@ -144,7 +133,7 @@ export default function Footer({ onOpenLegalModal = null }) {
           </div>
 
           <p className="flex items-center gap-1.5">
-            Hand-coded with <Heart className="w-3.5 h-3.5 text-[#D88F9A] fill-current" /> in React & Tailwind CSS
+            {siteConfig.brand.footerCredit} <Heart className="w-3.5 h-3.5 text-[#D88F9A] fill-current" />
           </p>
         </div>
 

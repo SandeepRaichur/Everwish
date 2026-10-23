@@ -2,15 +2,15 @@ import React from 'react';
 import { Sparkles, MessageCircle, Clock, ShieldCheck, Heart } from 'lucide-react';
 import Button from '../common/Button';
 import Badge from '../common/Badge';
-import { BRAND } from '../../config/designTokens';
+import { siteConfig } from '../../config/siteConfig.js';
 
 /**
- * Final Call To Action Section
+ * Final Call To Action Section (Driven by centralized siteConfig.js)
  * High-conversion closing banner with obvious, friction-free paths to order.
  */
 export default function FinalCTASection({ onStartSurprise = null }) {
-  const whatsappUrl = `https://wa.me/${BRAND.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-    "Hi Everwish! I want to create a custom birthday website surprise for someone special. Can you share how we can get started?"
+  const whatsappUrl = `https://wa.me/${siteConfig.business.whatsappNumber}?text=${encodeURIComponent(
+    siteConfig.business.defaultInquiryMessage
   )}`;
 
   return (
@@ -76,13 +76,13 @@ export default function FinalCTASection({ onStartSurprise = null }) {
         {/* Reassurance points */}
         <div className="pt-6 flex flex-wrap items-center justify-center gap-6 text-xs text-[#FFF5E7]/60">
           <span className="flex items-center gap-1.5">
-            <Clock className="w-4 h-4 text-[#D9BD88]" /> Standard Turnaround: 24–48 Hours
+            <Clock className="w-4 h-4 text-[#D9BD88]" /> Standard Turnaround: {siteConfig.business.standardTurnaround}
           </span>
           <span className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-[#D9BD88]" /> 100% Private & Ad-Free Link
+            <ShieldCheck className="w-4 h-4 text-[#D9BD88]" /> 100% Private &amp; Ad-Free Link
           </span>
           <span className="flex items-center gap-1.5">
-            <Heart className="w-4 h-4 text-[#D88F9A]" /> Revisions Included Before Delivery
+            <Heart className="w-4 h-4 text-[#D88F9A]" /> {siteConfig.business.revisionLimit}
           </span>
         </div>
 

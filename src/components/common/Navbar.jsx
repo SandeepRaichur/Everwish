@@ -2,22 +2,14 @@ import React, { useState } from 'react';
 import { Menu, X, Sparkles, MessageCircle } from 'lucide-react';
 import Button from './Button';
 import Badge from './Badge';
-import { BRAND } from '../../config/designTokens';
+import { siteConfig } from '../../config/siteConfig.js';
 
 /**
- * Editorial Studio Navbar
+ * Editorial Studio Navbar (Driven by centralized siteConfig.js)
  */
 export default function Navbar({ onOpenOrderModal = null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const navLinks = [
-    { label: 'Experiences', href: '#experiences' },
-    { label: 'How It Works', href: '#how-it-works' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'Why It Matters', href: '#why-it-matters' },
-    { label: 'FAQ', href: '#faq' },
-  ];
-
+  const navLinks = siteConfig.navigation.links;
 
   return (
     <header className="sticky top-0 z-50 bg-[#10131D]/90 backdrop-blur-md border-b border-[#D9BD88]/15 transition-all">
@@ -27,14 +19,16 @@ export default function Navbar({ onOpenOrderModal = null }) {
         <a href="#" className="flex items-center gap-3 group focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D9BD88] rounded-lg p-1">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1D2233] to-[#090B10] border border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88] shadow-inner group-hover:border-[#D9BD88] transition-colors">
             {/* Monogram Seal */}
-            <span className="font-serif font-bold text-lg tracking-wider text-[#D9BD88]">E</span>
+            <span className="font-serif font-bold text-lg tracking-wider text-[#D9BD88]">
+              {siteConfig.brand.monogramLetter || 'E'}
+            </span>
           </div>
           <div className="flex flex-col text-left">
             <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-[#FFF5E7] group-hover:text-[#D9BD88] transition-colors flex items-center gap-1.5">
-              Everwish <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-[#D9BD88]">Studios</span>
+              {siteConfig.brand.name} <span className="font-sans text-[11px] font-semibold uppercase tracking-widest text-[#D9BD88]">Studios</span>
             </span>
             <span className="text-[10px] tracking-wider text-[#FFF5E7]/50 -mt-0.5 hidden sm:inline-block">
-              Cinematic Birthday Websites
+              {siteConfig.brand.tagline}
             </span>
           </div>
 
@@ -56,7 +50,7 @@ export default function Navbar({ onOpenOrderModal = null }) {
         {/* Action Controls & WhatsApp Direct */}
         <div className="hidden sm:flex items-center gap-3">
           <Badge variant="emerald" size="sm" dot>
-            Taking Orders
+            {siteConfig.navigation.statusBadge}
           </Badge>
           <Button
             variant="primary-gold"
@@ -71,7 +65,7 @@ export default function Navbar({ onOpenOrderModal = null }) {
               }
             }}
           >
-            Create a Birthday Surprise
+            {siteConfig.navigation.ctaButtonLabel}
           </Button>
 
         </div>
@@ -115,14 +109,14 @@ export default function Navbar({ onOpenOrderModal = null }) {
                 if (el) el.scrollIntoView({ behavior: 'smooth' });
               }}
             >
-              Explore Packages & Pricing
+              Explore Packages &amp; Pricing
             </Button>
             <Button
               variant="whatsapp"
               fullWidth
               icon={MessageCircle}
-              href={`https://wa.me/${BRAND.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(
-                "Hi! I'd like to consult about creating a custom birthday website surprise."
+              href={`https://wa.me/${siteConfig.business.whatsappNumber}?text=${encodeURIComponent(
+                siteConfig.business.defaultInquiryMessage
               )}`}
               target="_blank"
               rel="noopener noreferrer"

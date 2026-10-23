@@ -4,54 +4,34 @@ import { EyeOff, Lock, Trash2, HeartHandshake, CheckCircle2 } from 'lucide-react
 import SectionHeading from '../common/SectionHeading';
 import Badge from '../common/Badge';
 import FeedbackCard from './FeedbackCard';
+import { siteConfig } from '../../config/siteConfig.js';
 
 /**
- * Trust & Privacy Section
+ * Trust & Privacy Section (Driven by centralized siteConfig.js)
  * Clear, uncompromised commitment to user confidentiality and authentic reviews.
  * Strictly complies with Rule 4 & 5.
  */
 export default function TrustAndPrivacySection() {
-  const privacyPillars = [
-    {
-      icon: EyeOff,
-      title: "Unlisted, Unindexed URLs",
-      description:
-        "Every Everwish website is configured with strict 'noindex' robot tags and published on unguessable links. Google and search engines cannot index your private photos or heartfelt notes.",
-    },
-    {
-      icon: Lock,
-      title: "Zero Third-Party Tracking & Ads",
-      description:
-        "Unlike free website builders, we run zero advertisement networks, zero data brokers, and zero intrusive analytics scripts. Your recipient sees only your personal memories.",
-    },
-    {
-      icon: Trash2,
-      title: "Complete Media Control",
-      description:
-        "After your celebration, you can request complete deletion of original source photos and voice files from our studio storage, or choose to keep the website active for permanent bookmarking.",
-    },
-    {
-      icon: HeartHandshake,
-      title: "Honest Human Guarantee",
-      description:
-        "No automated chatbots. You work 1-on-1 with the founder who personally ensures every image is beautifully framed and colors are balanced before delivery.",
-    },
-  ];
+  const iconList = [EyeOff, Lock, Trash2, HeartHandshake];
+  const pillars = siteConfig.trust.pillars.map((pillar, idx) => ({
+    ...pillar,
+    icon: iconList[idx % iconList.length],
+  }));
 
   return (
     <section className="py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <SectionHeading
-        overline="Trust & Confidentiality"
-        title="Your private memories are"
-        italicWord="sacred to us."
-        subtitle="We build websites for intimate relationships. That means complete privacy protection, honest communication, and zero fabricated claims."
-        badgeText="Studio Ethics"
+        overline={siteConfig.trust.overline}
+        title={siteConfig.trust.title}
+        italicWord={siteConfig.trust.italicWord}
+        subtitle={siteConfig.trust.subtitle}
+        badgeText={siteConfig.trust.badgeText}
       />
 
       {/* 4 Pillars Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-        {privacyPillars.map((pillar, idx) => {
+        {pillars.map((pillar, idx) => {
           const Icon = pillar.icon;
           return (
             <div
