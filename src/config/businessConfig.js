@@ -37,7 +37,20 @@ export const BUSINESS_CONFIG = {
   // If empty string (""), the form provides instant client-side verified WhatsApp and Email payload generation.
   formSubmissionEndpoint: "",
   
-  // ── PRIVACY COMMITMENTS ──
+  // ── SEO & DOMAIN CONFIGURATION ──
+  productionDomain: "https://everwish.in",
+  canonicalEnabled: true,
+
+  // ── PRIVACY-CONSCIOUS ANALYTICS CONFIGURATION ──
+  // Options: 'console' (default development logger) | 'plausible' | 'umami' | 'ga4' | 'disabled'
+  // Strict rule: NEVER transmits personal names, phone numbers, emails, photos, or message text.
+  analyticsProvider: "console",
+  analyticsDomain: "everwish.in",
+  analyticsMeasurementId: "", // e.g. "G-XXXXXXXXXX" when GA4 is configured
+
+  // ── PRIVACY & RETENTION COMMITMENTS ──
   privacyNotice:
     "We collect your contact details solely to communicate regarding your custom birthday website. We never sell, share, or market personal photos or notes to third parties.",
+  fileRetentionDays: 30, // Days files are retained on founder local staging for client revisions before secure purge
+  passcodeProtectionAvailable: true, // Enables optional 4-digit PIN lock on private birthday websites
 };

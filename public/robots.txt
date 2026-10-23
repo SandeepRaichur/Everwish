@@ -1,0 +1,20 @@
+# robots.txt for Everwish Studios (https://everwish.in)
+User-agent: *
+
+# Public marketing pages and approved showcase demos
+Allow: /
+Allow: /?demo=romantic
+Allow: /?demo=playful
+Allow: /?demo=family
+
+# Prevent indexing of unfinished previews, private customer keepsakes, and staging paths
+Disallow: /p/
+Disallow: /w/
+Disallow: /staging/
+Disallow: /private/
+Disallow: /*?preview=*
+Disallow: /*?token=*
+Disallow: /*?pin=*
+
+# Sitemap location
+Sitemap: https://everwish.in/sitemap.xml

@@ -13,6 +13,7 @@ import { INITIAL_PACKAGES, EXPERIENCE_THEMES } from '../../config/designTokens';
 import { Input, Select, Textarea } from '../common/FormControls';
 import Button from '../common/Button';
 import Badge from '../common/Badge';
+import { trackEvent } from '../../utils/analytics';
 
 /**
  * Pure helper utilities extracted outside React component render cycle
@@ -33,6 +34,7 @@ function getIsoTimestamp() {
 export default function InquiryGenerator({
   preselectedPackage = 'personalized',
   preselectedTheme = 'romantic',
+  onOpenLegalModal = null,
 }) {
   const [formData, setFormData] = useState({
     customerName: '',
@@ -162,6 +164,12 @@ export default function InquiryGenerator({
 
     const refId = generateOrderReference();
     setOrderReference(refId);
+
+    trackEvent('enquiry_form_submit', {
+      packageId: selectedPkg.id,
+      packagePrice: selectedPkg.price,
+      contactMethod: formData.contactMethod,
+    });
 
     // If a real headless form submission endpoint is configured in businessConfig.js:
     if (BUSINESS_CONFIG.formSubmissionEndpoint && BUSINESS_CONFIG.formSubmissionEndpoint.trim()) {
@@ -313,6 +321,7 @@ export default function InquiryGenerator({
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent('whatsapp_cta_click', { packageId: selectedPkg.id })}
                   className="w-full sm:w-auto"
                 >
                   Send to WhatsApp & Chat
@@ -322,6 +331,7 @@ export default function InquiryGenerator({
                   size="lg"
                   icon={Mail}
                   href={mailtoUrl}
+                  onClick={() => trackEvent('email_cta_click', { packageId: selectedPkg.id })}
                   className="w-full sm:w-auto"
                 >
                   Send via Email
@@ -514,7 +524,16 @@ export default function InquiryGenerator({
                 • <strong>No Automatic Charges:</strong> Submitting this brief costs nothing. A 50% deposit is requested only after we confirm delivery feasibility.
               </p>
               <p className="leading-relaxed">
-                • <strong>Privacy Commitment:</strong> {BUSINESS_CONFIG.privacyNotice}
+                • <strong>Privacy Commitment:</strong> {BUSINESS_CONFIG.privacyNotice}{' '}
+                {onOpenLegalModal && (
+                  <button
+                    type="button"
+                    onClick={() => onOpenLegalModal('privacy')}
+                    className="text-[#D9BD88] underline hover:text-[#FFF5E7] ml-1 cursor-pointer"
+                  >
+                    Read our full Privacy, Retention &amp; Terms Policy →
+                  </button>
+                )}
               </p>
             </div>
 

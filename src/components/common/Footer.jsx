@@ -7,7 +7,7 @@ const CURRENT_YEAR = new Date().getFullYear();
 /**
  * Editorial Studio Footer
  */
-export default function Footer() {
+export default function Footer({ onOpenLegalModal = null }) {
   return (
     <footer className="bg-[#090B10] border-t border-[#D9BD88]/20 pt-16 pb-12 text-[#FFF5E7]/70 text-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,9 +106,43 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FFF5E7]/50">
-          <p>© {CURRENT_YEAR} {BRAND.name}. All rights reserved.</p>
+        {/* Bottom Bar with Trust & Legal Modals */}
+        <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#FFF5E7]/50">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs text-[#FFF5E7]/60">
+            <span>© {CURRENT_YEAR} {BRAND.name}.</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegalModal && onOpenLegalModal('privacy')}
+              className="hover:text-[#D9BD88] transition-colors cursor-pointer"
+            >
+              Privacy Policy
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegalModal && onOpenLegalModal('retention')}
+              className="hover:text-[#D9BD88] transition-colors cursor-pointer"
+            >
+              File Retention & Deletion
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegalModal && onOpenLegalModal('security')}
+              className="hover:text-[#D9BD88] transition-colors cursor-pointer"
+            >
+              Passcode Security
+            </button>
+            <span>•</span>
+            <button
+              type="button"
+              onClick={() => onOpenLegalModal && onOpenLegalModal('terms')}
+              className="hover:text-[#D9BD88] transition-colors cursor-pointer"
+            >
+              Terms of Service
+            </button>
+          </div>
+
           <p className="flex items-center gap-1.5">
             Hand-coded with <Heart className="w-3.5 h-3.5 text-[#D88F9A] fill-current" /> in React & Tailwind CSS
           </p>

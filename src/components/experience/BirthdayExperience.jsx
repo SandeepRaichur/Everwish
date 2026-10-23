@@ -9,6 +9,7 @@ import {
   Mail,
   Image as ImageIcon,
   ArrowRight,
+  Lock,
 } from 'lucide-react';
 import Badge from '../common/Badge';
 import Button from '../common/Button';
@@ -31,7 +32,10 @@ export default function BirthdayExperience({
   const [secretMomentRevealed, setSecretMomentRevealed] = useState(false);
   const [confettiActive, setConfettiActive] = useState(false);
   const [activePhotoCategory, setActivePhotoCategory] = useState('All');
-
+  const [isPasscodeLocked, setIsPasscodeLocked] = useState(Boolean(data.passcode));
+  const [enteredPin, setEnteredPin] = useState('');
+  const [pinError, setPinError] = useState(false);
+  const correctPin = data.passcode || '2024';
 
   const triggerConfetti = () => {
     setConfettiActive(true);
@@ -42,6 +46,17 @@ export default function BirthdayExperience({
     setLetterUnfolded(false);
     setSecretMomentRevealed(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleUnlockPin = (e) => {
+    e.preventDefault();
+    if (enteredPin.trim() === correctPin) {
+      setIsPasscodeLocked(false);
+      setPinError(false);
+      triggerConfetti();
+    } else {
+      setPinError(true);
+    }
   };
 
   // Distinct photo styles per theme
@@ -181,6 +196,25 @@ export default function BirthdayExperience({
               </button>
             )}
 
+            {/* Passcode Protection Toggle Button */}
+            <button
+              type="button"
+              onClick={() => {
+                setIsPasscodeLocked(!isPasscodeLocked);
+                setPinError(false);
+                setEnteredPin('');
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono border transition-all cursor-pointer ${
+                isPasscodeLocked
+                  ? 'bg-amber-500/20 text-amber-300 border-amber-500/40 shadow-sm'
+                  : 'bg-[#151926] text-[#FFF5E7]/70 border-[#293046] hover:border-[#D9BD88]'
+              }`}
+              title="Test optional passcode protection feature"
+            >
+              <Lock className="w-3.5 h-3.5 text-[#D9BD88]" />
+              <span className="hidden sm:inline">{isPasscodeLocked ? 'Locked' : 'Test PIN Lock'}</span>
+            </button>
+
             {/* Restart button */}
             <button
               type="button"
@@ -196,8 +230,77 @@ export default function BirthdayExperience({
         </div>
       </header>
 
-      {/* ── PHASE 1: INTRIGUING CINEMATIC OPENING ── */}
-      <section className="pt-20 pb-24 md:pt-28 md:pb-36 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
+      {/* ── PASSCODE LOCK SCREEN (Optional Privacy Shield) ── */}
+      {isPasscodeLocked ? (
+        <div className="py-24 px-4 sm:px-6 lg:px-8 max-w-lg mx-auto text-center space-y-6 animate-in fade-in zoom-in-95 duration-200">
+          <div className="w-20 h-20 mx-auto rounded-3xl bg-[#1D2233] border-2 border-[#D9BD88]/40 flex items-center justify-center text-[#D9BD88] shadow-2xl">
+            <Lock className="w-10 h-10 animate-pulse" />
+          </div>
+
+          <div>
+            <Badge variant="rose" size="sm" dot>
+              Passcode Protected Keepsake
+            </Badge>
+            <h2 className="text-3xl font-serif font-bold text-[#FFF5E7] mt-3">
+              Private Birthday Surprise
+            </h2>
+            <p className="text-xs sm:text-sm text-[#FFF5E7]/70 mt-2 leading-relaxed">
+              This keepsake for <strong>{data.recipientName}</strong> has been secured with a private 4-digit PIN by the sender.
+            </p>
+          </div>
+
+          <form onSubmit={handleUnlockPin} className="p-6 rounded-3xl bg-[#151926] border border-[#293046] space-y-4 shadow-2xl">
+            <div>
+              <label htmlFor="passcode-pin" className="block text-xs font-mono uppercase tracking-widest text-[#D9BD88] mb-2">
+                Enter 4-Digit Birthday PIN
+              </label>
+              <input
+                id="passcode-pin"
+                type="password"
+                maxLength={6}
+                autoFocus
+                placeholder="••••"
+                value={enteredPin}
+                onChange={(e) => {
+                  setEnteredPin(e.target.value);
+                  if (pinError) setPinError(false);
+                }}
+                className="w-full text-center text-3xl font-mono tracking-[0.5em] px-4 py-3 rounded-2xl bg-[#10131D] border border-[#D9BD88]/40 text-[#FFF5E7] focus:outline-none focus:ring-2 focus:ring-[#D9BD88]"
+              />
+            </div>
+
+            {pinError && (
+              <p className="text-xs text-rose-400 font-mono">
+                Incorrect PIN. Please check with {data.senderName}.
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="w-full py-3 rounded-2xl bg-[#D9BD88] text-[#10131D] font-bold text-sm hover:bg-[#F4E7CD] transition-all transform hover:scale-[1.02] cursor-pointer shadow-lg"
+            >
+              Unlock Keepsake
+            </button>
+
+            {/* Demo testing shortcut */}
+            <div className="pt-2 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  setEnteredPin(correctPin);
+                  setPinError(false);
+                }}
+                className="text-[11px] text-[#D9BD88] hover:underline font-mono cursor-pointer"
+              >
+                [ Test Shortcut: Auto-fill Demo PIN ({correctPin}) ]
+              </button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        <>
+          {/* ── PHASE 1: INTRIGUING CINEMATIC OPENING ── */}
+          <section className="pt-20 pb-24 md:pt-28 md:pb-36 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden">
         
         {/* Mood-colored ambient backdrop aura */}
         <div
@@ -541,6 +644,8 @@ export default function BirthdayExperience({
         </div>
 
       </section>
+      </>
+      )}
 
       {/* ── BOTTOM STICKY SALES CONVERSION BAR (Sales Integration) ── */}
       <div className="fixed bottom-0 inset-x-0 z-40 bg-[#090B10]/95 backdrop-blur-md border-t border-[#D9BD88]/30 py-3.5 px-4 shadow-2xl">

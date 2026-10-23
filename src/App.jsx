@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Sparkles,
   Heart,
@@ -14,6 +14,7 @@ import SectionHeading from './components/common/SectionHeading';
 import { Input, Select, Textarea } from './components/common/FormControls';
 import { LoadingSkeleton, AlertBanner } from './components/common/StatusStates';
 import { AccordionGroup } from './components/common/Accordion';
+import LegalModal from './components/common/LegalModal';
 
 import PricingCard from './components/showcase/PricingCard';
 import ExperienceThemePreview from './components/showcase/ExperienceThemePreview';
@@ -26,6 +27,7 @@ import LiveExperienceModal from './components/showcase/LiveExperienceModal';
 import BirthdayExperience from './components/experience/BirthdayExperience';
 import { DEMO_EXPERIENCES } from './data/demoExperiences';
 import { BRAND, INITIAL_PACKAGES, FAQ_ITEMS, EXPERIENCE_THEMES } from './config/designTokens';
+import { initAnalytics, trackPageView, trackEvent } from './utils/analytics';
 
 export default function App() {
   const [currentView, setCurrentView] = useState(() => {
@@ -52,7 +54,17 @@ export default function App() {
   const [selectedPackage, setSelectedPackage] = useState(INITIAL_PACKAGES[1]);
   const [selectedTheme, setSelectedTheme] = useState(EXPERIENCE_THEMES[0]);
   const [previewModalTheme, setPreviewModalTheme] = useState(null);
+  const [legalModalState, setLegalModalState] = useState({ isOpen: false, tab: 'privacy' });
 
+  useEffect(() => {
+    initAnalytics();
+    trackPageView('Everwish Home');
+  }, []);
+
+  const handleOpenLegalModal = (tab = 'privacy') => {
+    setLegalModalState({ isOpen: true, tab });
+    trackEvent('legal_policy_view', { tab });
+  };
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
@@ -64,6 +76,7 @@ export default function App() {
   const handleLaunchDemo = (demoId) => {
     setActiveDemoId(demoId);
     setCurrentView('demo');
+    trackEvent('demo_open', { demoId });
     try {
       window.history.pushState(null, '', `?demo=${demoId}`);
     } catch {
@@ -74,6 +87,7 @@ export default function App() {
 
   const handleReturnToStudio = () => {
     setCurrentView('main');
+    trackEvent('return_to_studio');
     try {
       window.history.pushState(null, '', window.location.pathname);
     } catch {
@@ -86,6 +100,7 @@ export default function App() {
     const matchedTheme = EXPERIENCE_THEMES.find((t) => t.id === themeId) || EXPERIENCE_THEMES[0];
     setSelectedTheme(matchedTheme);
     setCurrentView('main');
+    trackEvent('order_from_demo_click', { themeId });
     try {
       window.history.pushState(null, '', window.location.pathname);
     } catch {
@@ -98,11 +113,13 @@ export default function App() {
 
   const handleSelectPackage = (pkg) => {
     setSelectedPackage(pkg);
+    trackEvent('package_select', { packageId: pkg.id, price: pkg.price });
     scrollToSection('order-inquiry');
   };
 
   const handleSelectTheme = (theme) => {
     setSelectedTheme(theme);
+    trackEvent('theme_select', { themeId: theme.id });
     scrollToSection('order-inquiry');
   };
 
@@ -194,11 +211,19 @@ export default function App() {
         </div>
       </div>
 
+      {/* Accessible Skip Link for Keyboard / Screen Readers */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#D9BD88] focus:text-[#10131D] focus:font-bold focus:rounded-xl focus:shadow-2xl focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Global Luxury Header */}
       <Navbar onOpenOrderModal={() => scrollToSection('order-inquiry')} />
 
-      {/* Main Content Area */}
-      <main className="flex-1">
+      {/* Main Content Area Landmark */}
+      <main id="main-content" className="flex-1">
         {activeTab === 'experience' ? (
           <div>
             
@@ -421,6 +446,7 @@ export default function App() {
               <InquiryGenerator
                 preselectedPackage={selectedPackage.id}
                 preselectedTheme={selectedTheme.id}
+                onOpenLegalModal={handleOpenLegalModal}
               />
             </section>
 
@@ -679,7 +705,7 @@ export default function App() {
       </main>
 
       {/* 10. Global Footer */}
-      <Footer />
+      <Footer onOpenLegalModal={handleOpenLegalModal} />
 
       {/* Interactive Modal Backup */}
       <LiveExperienceModal
@@ -687,6 +713,13 @@ export default function App() {
         isOpen={Boolean(previewModalTheme)}
         onClose={() => setPreviewModalTheme(null)}
         onSelectTheme={handleSelectTheme}
+      />
+
+      {/* Legal & Privacy Commitments Modal */}
+      <LegalModal
+        isOpen={legalModalState.isOpen}
+        initialTab={legalModalState.tab}
+        onClose={() => setLegalModalState((prev) => ({ ...prev, isOpen: false }))}
       />
       
     </div>
