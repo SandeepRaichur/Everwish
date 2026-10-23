@@ -19,14 +19,17 @@ export default function PricingCard({
     originalPrice,
     turnaround,
     badge,
+    badgeText,
     tagline,
-    features,
+    features = [],
     cta,
+    ctaLabel,
     popular,
   } = packageData;
 
-
-  const discount = Math.round(((originalPrice - price) / originalPrice) * 100);
+  const displayBadge = badge || badgeText;
+  const displayCta = cta || ctaLabel || 'Select Package';
+  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
   return (
     <div
@@ -56,9 +59,9 @@ export default function PricingCard({
               {tagline}
             </p>
           </div>
-          {badge && !popular && (
+          {displayBadge && !popular && (
             <Badge variant="ivory" size="sm">
-              {badge}
+              {displayBadge}
             </Badge>
           )}
         </div>
@@ -98,16 +101,40 @@ export default function PricingCard({
             Included in this experience:
           </p>
           <ul className="space-y-2.5 text-xs sm:text-sm text-[#FFF5E7]/80">
-            {features.map((feature, i) => (
-              <li key={i} className="flex items-start gap-2.5">
-                <span className="w-4 h-4 rounded-full bg-[#D9BD88]/15 text-[#D9BD88] flex items-center justify-center shrink-0 mt-0.5">
-                  <Check className="w-3 h-3 stroke-[3]" />
-                </span>
-                <span className={i === 0 && popular ? 'font-medium text-[#FFF5E7]' : ''}>
-                  {feature}
-                </span>
-              </li>
-            ))}
+            {features.map((feature, i) => {
+              const label = typeof feature === 'string' ? feature : feature?.label || '';
+              const isIncluded = typeof feature === 'string' ? true : feature?.included !== false;
+
+              return (
+                <li
+                  key={i}
+                  className={`flex items-start gap-2.5 ${
+                    !isIncluded ? 'opacity-40 text-[#FFF5E7]/40' : ''
+                  }`}
+                >
+                  <span
+                    className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${
+                      isIncluded
+                        ? 'bg-[#D9BD88]/15 text-[#D9BD88]'
+                        : 'bg-white/5 text-[#FFF5E7]/30'
+                    }`}
+                  >
+                    {isIncluded ? (
+                      <Check className="w-3 h-3 stroke-[3]" />
+                    ) : (
+                      <span className="text-[10px] leading-none font-bold">✕</span>
+                    )}
+                  </span>
+                  <span
+                    className={`${
+                      i === 0 && popular && isIncluded ? 'font-medium text-[#FFF5E7]' : ''
+                    } ${!isIncluded ? 'line-through' : ''}`}
+                  >
+                    {label}
+                  </span>
+                </li>
+              );
+            })}
           </ul>
         </div>
       </div>
@@ -122,7 +149,7 @@ export default function PricingCard({
           iconPosition="right"
           onClick={() => onSelect && onSelect(packageData)}
         >
-          {cta || 'Select Package'}
+          {displayCta}
         </Button>
       </div>
     </div>

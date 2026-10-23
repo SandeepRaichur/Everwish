@@ -117,10 +117,10 @@ export default function ExperienceThemePreview({
                 Signature Interactive Touches:
               </p>
               <ul className="space-y-2 text-xs text-[#FFF5E7]/75">
-                {activeTheme.highlights.map((item, i) => (
+                {(activeTheme.highlights || activeTheme.features || []).map((item, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <span className="text-[#D9BD88] text-sm shrink-0 leading-none mt-0.5">✦</span>
-                    <span>{item}</span>
+                    <span>{typeof item === 'string' ? item : item?.label || ''}</span>
                   </li>
                 ))}
               </ul>
