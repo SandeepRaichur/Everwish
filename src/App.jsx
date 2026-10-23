@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Sparkles, Heart, Eye, Clock } from 'lucide-react';
-
-
+import {
+  Sparkles,
+  Heart,
+  Eye,
+  Clock,
+} from 'lucide-react';
 
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
@@ -20,19 +23,77 @@ import FinalCTASection from './components/showcase/FinalCTASection';
 import InquiryGenerator from './components/showcase/InquiryGenerator';
 import LiveExperienceModal from './components/showcase/LiveExperienceModal';
 
+import BirthdayExperience from './components/experience/BirthdayExperience';
+import { DEMO_EXPERIENCES } from './data/demoExperiences';
 import { BRAND, INITIAL_PACKAGES, FAQ_ITEMS, EXPERIENCE_THEMES } from './config/designTokens';
 
 export default function App() {
+  const [currentView, setCurrentView] = useState(() => {
+    try {
+      const p = new URLSearchParams(window.location.search).get('demo');
+      if (p && DEMO_EXPERIENCES[p]) return 'demo';
+    } catch {
+      // ignore
+    }
+    return 'main';
+  });
+
+  const [activeDemoId, setActiveDemoId] = useState(() => {
+    try {
+      const p = new URLSearchParams(window.location.search).get('demo');
+      if (p && DEMO_EXPERIENCES[p]) return p;
+    } catch {
+      // ignore
+    }
+    return 'romantic';
+  });
+
   const [activeTab, setActiveTab] = useState('experience'); // 'experience' | 'design-system'
   const [selectedPackage, setSelectedPackage] = useState(INITIAL_PACKAGES[1]);
   const [selectedTheme, setSelectedTheme] = useState(EXPERIENCE_THEMES[0]);
   const [previewModalTheme, setPreviewModalTheme] = useState(null);
+
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleLaunchDemo = (demoId) => {
+    setActiveDemoId(demoId);
+    setCurrentView('demo');
+    try {
+      window.history.pushState(null, '', `?demo=${demoId}`);
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleReturnToStudio = () => {
+    setCurrentView('main');
+    try {
+      window.history.pushState(null, '', window.location.pathname);
+    } catch {
+      // ignore
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOrderFromDemo = (themeId) => {
+    const matchedTheme = EXPERIENCE_THEMES.find((t) => t.id === themeId) || EXPERIENCE_THEMES[0];
+    setSelectedTheme(matchedTheme);
+    setCurrentView('main');
+    try {
+      window.history.pushState(null, '', window.location.pathname);
+    } catch {
+      // ignore
+    }
+    setTimeout(() => {
+      scrollToSection('order-inquiry');
+    }, 150);
   };
 
   const handleSelectPackage = (pkg) => {
@@ -45,46 +106,90 @@ export default function App() {
     scrollToSection('order-inquiry');
   };
 
+  // If in full demo view, render the interactive BirthdayExperience engine
+  if (currentView === 'demo') {
+    const demoData = DEMO_EXPERIENCES[activeDemoId] || DEMO_EXPERIENCES.romantic;
+    return (
+      <BirthdayExperience
+        key={activeDemoId}
+        data={demoData}
+        onReturnToStudio={handleReturnToStudio}
+        onSwitchDemo={(id) => handleLaunchDemo(id)}
+        onOrderThisStyle={handleOrderFromDemo}
+      />
+    );
+  }
+
+
+  // Otherwise, render the main Everwish Studios business website
   return (
     <div className="min-h-screen bg-[#10131D] text-[#FFF5E7] flex flex-col font-sans selection:bg-[#D9BD88] selection:text-[#10131D]">
       
-      {/* Studio Viewport Mode Switcher Banner (Allows inspecting design system tokens or full experience) */}
+      {/* Studio Viewport Mode Switcher Banner */}
       <div className="bg-[#090B10] border-b border-[#293046] py-2 px-4 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
           <div className="flex items-center gap-2 text-[#FFF5E7]/70">
             <span className="w-2 h-2 rounded-full bg-[#D9BD88] animate-pulse" />
             <span className="font-mono text-[11px] uppercase tracking-wider text-[#D9BD88]">
-              Everwish Studios — Chunk 3 Live Build
+              Everwish Studios — Chunk 4 Live Demos Ready
             </span>
             <span className="hidden md:inline text-[#FFF5E7]/40">|</span>
             <span className="hidden md:inline text-[11px] text-[#FFF5E7]/60">
-              Personalized Birthday Websites from ₹499
+              3 Working Interactive Experiences
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-[#151926] p-1 rounded-full border border-[#293046]">
-            <button
-              type="button"
-              onClick={() => setActiveTab('experience')}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'experience'
-                  ? 'bg-[#D9BD88] text-[#10131D] font-semibold shadow'
-                  : 'text-[#FFF5E7]/70 hover:text-[#FFF5E7]'
-              }`}
-            >
-              Customer Experience View
-            </button>
-            <button
-              type="button"
-              onClick={() => setActiveTab('design-system')}
-              className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
-                activeTab === 'design-system'
-                  ? 'bg-[#D9BD88] text-[#10131D] font-semibold shadow'
-                  : 'text-[#FFF5E7]/70 hover:text-[#FFF5E7]'
-              }`}
-            >
-              Design Tokens Spec
-            </button>
+          <div className="flex items-center gap-2">
+            {/* Quick Demo Launch Buttons */}
+            <div className="hidden lg:flex items-center gap-1.5 mr-2">
+              <span className="text-[10px] uppercase font-mono text-[#FFF5E7]/50">Test Demos:</span>
+              <button
+                type="button"
+                onClick={() => handleLaunchDemo('romantic')}
+                className="px-2 py-0.5 rounded bg-[#D88F9A]/15 text-[#F5CAD1] border border-[#D88F9A]/30 text-[11px] hover:bg-[#D88F9A]/30 transition-colors cursor-pointer"
+              >
+                Romantic
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLaunchDemo('playful')}
+                className="px-2 py-0.5 rounded bg-[#D9BD88]/15 text-[#F4E7CD] border border-[#D9BD88]/30 text-[11px] hover:bg-[#D9BD88]/30 transition-colors cursor-pointer"
+              >
+                Best Friend
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLaunchDemo('family')}
+                className="px-2 py-0.5 rounded bg-[#C2A370]/15 text-[#FBF7EF] border border-[#C2A370]/30 text-[11px] hover:bg-[#C2A370]/30 transition-colors cursor-pointer"
+              >
+                Family (Papa 50th)
+              </button>
+            </div>
+
+            <div className="flex items-center gap-1 bg-[#151926] p-1 rounded-full border border-[#293046]">
+              <button
+                type="button"
+                onClick={() => setActiveTab('experience')}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                  activeTab === 'experience'
+                    ? 'bg-[#D9BD88] text-[#10131D] font-semibold shadow'
+                    : 'text-[#FFF5E7]/70 hover:text-[#FFF5E7]'
+                }`}
+              >
+                Customer Experience View
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveTab('design-system')}
+                className={`px-3 py-1 rounded-full text-xs font-medium transition-all cursor-pointer ${
+                  activeTab === 'design-system'
+                    ? 'bg-[#D9BD88] text-[#10131D] font-semibold shadow'
+                    : 'text-[#FFF5E7]/70 hover:text-[#FFF5E7]'
+                }`}
+              >
+                Design Tokens Spec
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -143,10 +248,10 @@ export default function App() {
                     variant="secondary-outline"
                     size="lg"
                     icon={Eye}
-                    onClick={() => scrollToSection('experiences')}
+                    onClick={() => handleLaunchDemo('romantic')}
                     className="w-full sm:w-auto"
                   >
-                    Explore Birthday Experiences
+                    Open Live Romantic Demo
                   </Button>
                 </div>
 
@@ -177,16 +282,16 @@ export default function App() {
             <section id="experiences" className="py-20 bg-[#0B0D14] border-y border-[#D9BD88]/15 scroll-mt-20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionHeading
-                  overline="Artistic Directions"
+                  overline="Artistic Directions & Working Demos"
                   title="Tailored specifically for"
                   italicWord="your relationship."
-                  subtitle="Every person is unique. We never use one-size-fits-all designs. Explore our three distinct directions with interactive simulated demos."
+                  subtitle="Every person is unique. We never use one-size-fits-all designs. Explore our three distinct directions or launch the complete working demo directly."
                   badgeText="3 Visual Styles"
                 />
 
                 <ExperienceThemePreview
                   onSelectThemeForInquiry={handleSelectTheme}
-                  onOpenLiveModal={(theme) => setPreviewModalTheme(theme)}
+                  onOpenLiveModal={(theme) => handleLaunchDemo(theme.id)}
                 />
               </div>
             </section>
@@ -271,7 +376,7 @@ export default function App() {
                   ))}
                 </div>
 
-                {/* Rush Delivery / Custom Requests Callout */}
+                {/* Rush Delivery Callout */}
                 <div className="mt-12 p-6 rounded-2xl bg-[#151926]/60 border border-[#293046] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs sm:text-sm text-[#FFF5E7]/80">
                   <div className="flex items-center gap-3">
                     <Clock className="w-5 h-5 text-[#D9BD88] shrink-0" />
@@ -500,7 +605,7 @@ export default function App() {
               </div>
             </section>
 
-            {/* 5. System States (Loading, Alert, Confirmation) */}
+            {/* 5. System States */}
             <section className="space-y-6">
               <h2 className="text-xl font-serif text-[#D9BD88] font-bold">
                 5. System State Feedback Primitives
@@ -576,7 +681,7 @@ export default function App() {
       {/* 10. Global Footer */}
       <Footer />
 
-      {/* Interactive Full-Screen Preview Modal */}
+      {/* Interactive Modal Backup */}
       <LiveExperienceModal
         theme={previewModalTheme}
         isOpen={Boolean(previewModalTheme)}
