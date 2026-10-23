@@ -1,4 +1,4 @@
-import { BUSINESS_CONFIG } from './businessConfig';
+import { BUSINESS_CONFIG } from './businessConfig.js';
 
 /**
  * EVERWISH — DESIGN SYSTEM TOKENS & BUSINESS CONFIG
