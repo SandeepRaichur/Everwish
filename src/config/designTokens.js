@@ -1,18 +1,22 @@
+import { BUSINESS_CONFIG } from './businessConfig';
+
 /**
  * EVERWISH — DESIGN SYSTEM TOKENS & BUSINESS CONFIG
  * Centralized design tokens and business rules.
  */
 
 export const BRAND = {
-  name: "Everwish",
-  tagline: "Handcrafted Cinematic Birthday Websites",
+  name: BUSINESS_CONFIG.brandName,
+  tagline: BUSINESS_CONFIG.tagline,
   descriptor: "Personalized Digital Birthday Keepsakes",
-  phone: "+919876543210", // Formatted for direct WhatsApp integration
-  email: "hello@everwish.in",
-  currency: "₹",
-  turnaroundDefault: "24–48 hours",
+  phone: BUSINESS_CONFIG.whatsappNumber,
+  isPhonePlaceholder: BUSINESS_CONFIG.isPhonePlaceholder,
+  email: BUSINESS_CONFIG.email,
+  currency: BUSINESS_CONFIG.currency,
+  turnaroundDefault: BUSINESS_CONFIG.standardTurnaround,
   guaranteeText: "100% human-coded. No generic templates.",
 };
+
 
 
 export const COLOR_PALETTE = {
